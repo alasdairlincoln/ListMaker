@@ -7,30 +7,37 @@
 //
 
 import XCTest
-@testable import ListMaker
 
-class ListMakerTests: XCTestCase {
+class ListerTests: XCTestCase {
     
     override func setUp() {
+        let lister = Lister.sharedInstance
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        lister.clearList()
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testAddItem() {
+        let lister = Lister.sharedInstance
+        lister.add(item: "Bread")
+        let newItem:String = lister.getItem(atIndex: 0)
+        XCTAssertEqual(newItem, "Bread")
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testGetInvalidIndex() {
+        let lister = Lister.sharedInstance
+        lister.add(item: "Bread")
+        lister.add(item: "Butter")
+        print(lister.count)
+        XCTAssertEqual(lister.count, 2)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testClearList() {
+        let lister = Lister.sharedInstance
+        lister.add(item: "Bread")
+        lister.add(item: "Butter")
+        print(lister.count)
+        XCTAssertEqual(lister.count, 2)
+        lister.clearList()
+        XCTAssertEqual(lister.count, 0)
     }
-    
 }
